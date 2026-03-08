@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MANAGER
+  STAFF
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  MOBILE
+}
+
+enum SaleStatus {
+  COMPLETED
+  VOIDED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(STAFF)
+  createdAt DateTime @default(now())
+  sales     Sale[]
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  products Product[]
+}
+
+model Supplier {
+  id          String     @id @default(cuid())
+  name        String
+  contactInfo String?
+  address     String?
+  createdAt   DateTime   @default(now())
+  products    Product[]
+  deliveries  Delivery[]
+}
+
+model Product {
+  id         String     @id @default(cuid())
+  name       String
+  sku        String     @unique
+  category   Category   @relation(fields: [categoryId], references: [id])
+  categoryId String
+  supplier   Supplier   @relation(fields: [supplierId], references: [id])
+  supplierId String
+  price      Float
+  createdAt  DateTime   @default(now())
+  inventory  Inventory?
+  saleItems  SaleItem[]
+}
+
+model Inventory {
+  id               String   @id @default(cuid())
+  product          Product  @relation(fields: [productId], references: [id])
+  productId        String   @unique
+  quantity         Int      @default(0)
+  minimumThreshold Int      @default(10)
+  updatedAt        DateTime @updatedAt
+}
+
+model Delivery {
+  id           String         @id @default(cuid())
+  supplier     Supplier       @relation(fields: [supplierId], references: [id])
+  supplierId   String
+  dateReceived DateTime       @default(now())
+  notes        String?
+  items        DeliveryItem[]
+}
+
+model DeliveryItem {
+  id          String   @id @default(cuid())
+  delivery    Delivery @relation(fields: [deliveryId], references: [id])
+  deliveryId  String
+  productId   String
+  productName String
+  quantity    Int
+}
+
+model Sale {
+  id            String        @id @default(cuid())
+  processedBy   User          @relation(fields: [userId], references: [id])
+  userId        String
+  totalAmount   Float
+  paymentMethod PaymentMethod @default(CASH)
+  status        SaleStatus    @default(COMPLETED)
+  createdAt     DateTime      @default(now())
+  items         SaleItem[]
+}
+
+model SaleItem {
+  id          String  @id @default(cuid())
+  sale        Sale    @relation(fields: [saleId], references: [id])
+  saleId      String
+  product     Product @relation(fields: [productId], references: [id])
+  productId   String
+  productName String
+  quantity    Int
+  unitPrice   Float
+}
