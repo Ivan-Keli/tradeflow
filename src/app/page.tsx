@@ -43,17 +43,31 @@ export default async function Home() {
             </a>
             <Link
               href="/login"
-              className="rounded-md bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700"
+              className="rounded-md border border-blue-600 px-5 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50"
             >
               Login
             </Link>
+            <Link
+              href="/signup"
+              className="rounded-md bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Sign Up
+            </Link>
           </nav>
-          <Link
-            href="/login"
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 md:hidden"
-          >
-            Login
-          </Link>
+          <div className="flex items-center gap-2 md:hidden">
+            <Link
+              href="/login"
+              className="rounded-md border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50"
+            >
+              Login
+            </Link>
+            <Link
+              href="/signup"
+              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Sign Up
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -75,17 +89,17 @@ export default async function Home() {
             </p>
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
-                href="/login"
+                href="/signup"
                 className="flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-3 text-base font-medium text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700"
               >
-                Enter System <ArrowRight className="h-4 w-4" />
+                Get Started <ArrowRight className="h-4 w-4" />
               </Link>
-              <a
-                href="#features"
+              <Link
+                href="/login"
                 className="rounded-lg border border-gray-300 px-8 py-3 text-base font-medium text-gray-700 hover:bg-gray-50"
               >
-                Learn More
-              </a>
+                Login
+              </Link>
             </div>
           </div>
         </div>
@@ -253,15 +267,23 @@ export default async function Home() {
               Ready to Get Started?
             </h2>
             <p className="mx-auto mb-8 max-w-xl text-blue-100">
-              Log in to access the Trade Flow management system and start running
-              your business more efficiently.
+              Create an account or log in to access the Trade Flow management system
+              and start running your business more efficiently.
             </p>
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3 text-base font-medium text-blue-600 shadow-lg hover:bg-blue-50"
-            >
-              Login to Trade Flow <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3 text-base font-medium text-blue-600 shadow-lg hover:bg-blue-50"
+              >
+                Create Account <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-2 rounded-lg border-2 border-white/50 px-8 py-3 text-base font-medium text-white hover:bg-white/10"
+              >
+                Login
+              </Link>
+            </div>
           </div>
         </div>
       </section>
